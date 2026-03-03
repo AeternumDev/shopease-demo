@@ -2,41 +2,24 @@
 
 import React from 'react';
 import { OrderStatus } from '@/types';
+import { Badge, type badgeVariants } from '@/components/ui/Badge';
+import type { VariantProps } from 'class-variance-authority';
 
 interface OrderStatusBadgeProps {
   status: OrderStatus;
 }
 
-const STATUS_CONFIG: Record<OrderStatus, { label: string; className: string }> = {
-  pending: {
-    label: 'Ausstehend',
-    className: 'bg-yellow-100 text-yellow-800',
-  },
-  confirmed: {
-    label: 'Bestätigt',
-    className: 'bg-blue-100 text-blue-800',
-  },
-  shipped: {
-    label: 'Versendet',
-    className: 'bg-purple-100 text-purple-800',
-  },
-  delivered: {
-    label: 'Geliefert',
-    className: 'bg-green-100 text-green-800',
-  },
-  cancelled: {
-    label: 'Storniert',
-    className: 'bg-gray-100 text-gray-600',
-  },
+type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>;
+
+const STATUS_CONFIG: Record<OrderStatus, { label: string; variant: BadgeVariant }> = {
+  pending: { label: 'Ausstehend', variant: 'yellow' },
+  confirmed: { label: 'Bestätigt', variant: 'blue' },
+  shipped: { label: 'Versendet', variant: 'violet' },
+  delivered: { label: 'Geliefert', variant: 'green' },
+  cancelled: { label: 'Storniert', variant: 'muted' },
 };
 
 export function OrderStatusBadge({ status }: OrderStatusBadgeProps) {
   const config = STATUS_CONFIG[status];
-  return (
-    <span
-      className={`inline-flex items-center rounded px-2.5 py-0.5 text-xs font-medium ${config.className}`}
-    >
-      {config.label}
-    </span>
-  );
+  return <Badge variant={config.variant}>{config.label}</Badge>;
 }

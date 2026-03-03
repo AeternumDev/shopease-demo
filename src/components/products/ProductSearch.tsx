@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Search } from 'lucide-react';
 import { Product } from '@/types';
 import { productRepository } from '@/lib/services/product-repository.stub';
 import { ProductList } from './ProductList';
-import { Input } from '@/components/ui/Input';
 
 interface ProductSearchProps {
   initialProducts: Product[];
@@ -27,16 +27,27 @@ export function ProductSearch({ initialProducts }: ProductSearchProps) {
   }, [query, initialProducts]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <Input
-        id="product-search"
-        label="Produkte suchen"
-        type="search"
-        placeholder="Mindestens 2 Zeichen eingeben…"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        aria-label="Produkte suchen"
-      />
+    <div className="flex flex-col gap-6">
+      <div className="relative">
+        <Search
+          size={16}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none"
+        />
+        <input
+          id="product-search"
+          type="search"
+          placeholder="Produkte suchen…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          aria-label="Produkte suchen"
+          className="h-10 w-full rounded-md border border-zinc-200 bg-white pl-9 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-1 transition-colors"
+        />
+        {query && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-400">
+            {results.length} Ergebnisse
+          </span>
+        )}
+      </div>
       <ProductList products={results} />
     </div>
   );

@@ -34,8 +34,6 @@ npm install
 npm run dev     # http://localhost:3000
 ```
 
-Keine `.env`-Datei, kein Supabase-Projekt, keine externen Dienste erforderlich.
-
 **Testkonten:**
 - Kunde: `kunde@shopease.de` / `testpasswort123`
 - Admin: `admin@shopease.de` / `testpasswort123`

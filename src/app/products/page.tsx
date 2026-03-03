@@ -17,13 +17,22 @@ export default function ProductsPage() {
   }, []);
 
   return (
-    <main className="max-w-5xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Produkte</h1>
+    <div className="flex flex-col gap-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-900">Produkte</h1>
+        <p className="mt-1 text-sm text-zinc-500">
+          {!isLoading && `${products.length} Produkte verfügbar`}
+        </p>
+      </div>
       {isLoading ? (
-        <p className="text-gray-500">Lade Produkte…</p>
+        <div className="space-y-2">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-32 rounded-lg bg-zinc-100 animate-pulse" />
+          ))}
+        </div>
       ) : (
         <ProductSearch initialProducts={products} />
       )}
-    </main>
+    </div>
   );
 }
