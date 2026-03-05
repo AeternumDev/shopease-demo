@@ -128,7 +128,11 @@ const SEED_ORDERS: Order[] = [
  * Validiert Statusübergänge gemäß definiertem State-Machine-Pattern.
  */
 export class OrderRepositoryStub implements IOrderRepository {
-  private orders: Order[] = [...SEED_ORDERS];
+  private orders: Order[];
+
+  constructor(initialOrders: Order[] = []) {
+    this.orders = [...initialOrders];
+  }
 
   async create(data: Omit<Order, 'id' | 'created_at' | 'updated_at'>): Promise<Order> {
     const order: Order = {
@@ -163,4 +167,4 @@ export class OrderRepositoryStub implements IOrderRepository {
   }
 }
 
-export const orderRepository = new OrderRepositoryStub();
+export const orderRepository = new OrderRepositoryStub(SEED_ORDERS);

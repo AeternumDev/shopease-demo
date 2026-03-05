@@ -55,7 +55,7 @@ function KpiCard({ label, value, icon, sub }: KpiCardProps) {
   );
 }
 
-export default function AdminDashboardPage() {
+export default function AdminPerformancePage() {
   const { isAdmin, isLoading: authLoading } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -113,7 +113,7 @@ export default function AdminDashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-900">Dashboard</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-900">Performance</h1>
           <p className="mt-1 text-sm text-zinc-500">Übersicht aller wichtigen Kennzahlen</p>
         </div>
         <Badge variant="secondary" className="flex items-center gap-1.5">

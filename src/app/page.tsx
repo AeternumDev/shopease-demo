@@ -15,9 +15,9 @@ const navItems = [
     description: "Den Status Ihrer aktuellen und vergangenen Bestellungen einsehen.",
   },
   {
-    href: "/admin/dashboard",
+    href: "/admin/performance",
     icon: LayoutDashboard,
-    label: "KPI-Dashboard",
+    label: "Performance",
     description: "Umsatz, Bestellstatistiken und wichtige Kennzahlen auf einen Blick.",
   },
   {
@@ -55,11 +55,11 @@ export default function HomePage() {
             Produkte ansehen
           </Link>
           <Link
-            href="/admin/dashboard"
+            href="/admin/performance"
             className="inline-flex items-center gap-2 rounded-md border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
           >
             <LayoutDashboard size={15} />
-            KPI-Dashboard
+            Performance
           </Link>
           <Link
             href="/login"

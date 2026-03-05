@@ -12,15 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-      - run: npm ci
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
       - name: ESLint
-        run: npm run lint
+        run: pnpm run lint
       - name: TypeScript Compiler Check
-        run: npx tsc --noEmit
+        run: pnpm exec tsc --noEmit
 
   unit-and-integration-tests:
     name: "Stage 2: Unit & Integration Tests"
@@ -28,13 +31,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-      - run: npm ci
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
       - name: Run Tests with Coverage
-        run: npm run test:ci
+        run: pnpm run test:ci
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
         if: always()
@@ -49,13 +55,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-      - run: npm ci
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
       - name: Next.js Build
-        run: npm run build
+        run: pnpm run build
 
   e2e-tests:
     name: "Stage 4: E2E Tests (Playwright)"
@@ -63,15 +72,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
-      - run: npm ci
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
       - name: Run E2E Tests
-        run: npm run test:e2e
+        run: pnpm run test:e2e
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
         if: always()
