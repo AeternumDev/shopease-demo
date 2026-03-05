@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShoppingBag, Package, ClipboardList, ShieldCheck } from "lucide-react";
+import { ShoppingBag, Package, ClipboardList, ShieldCheck, LayoutDashboard } from "lucide-react";
 
 const navItems = [
   {
@@ -13,6 +13,12 @@ const navItems = [
     icon: ClipboardList,
     label: "Meine Bestellungen",
     description: "Den Status Ihrer aktuellen und vergangenen Bestellungen einsehen.",
+  },
+  {
+    href: "/admin/dashboard",
+    icon: LayoutDashboard,
+    label: "KPI-Dashboard",
+    description: "Umsatz, Bestellstatistiken und wichtige Kennzahlen auf einen Blick.",
   },
   {
     href: "/admin/products",
@@ -49,6 +55,13 @@ export default function HomePage() {
             Produkte ansehen
           </Link>
           <Link
+            href="/admin/dashboard"
+            className="inline-flex items-center gap-2 rounded-md border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
+          >
+            <LayoutDashboard size={15} />
+            KPI-Dashboard
+          </Link>
+          <Link
             href="/login"
             className="inline-flex items-center gap-2 rounded-md border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50 transition-colors"
           >
@@ -60,7 +73,7 @@ export default function HomePage() {
       {/* Navigation cards */}
       <section>
         <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-4">Bereiche</h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {navItems.map(({ href, icon: Icon, label, description }) => (
             <Link
               key={href}
