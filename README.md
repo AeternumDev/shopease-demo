@@ -4,15 +4,7 @@ Proof-of-Concept für eine automatisierte Teststrategie mit CI/CD-Pipeline-Integ
 
 ## Architektur
 
-Das Projekt setzt auf das **Repository-Pattern** mit **Stub-Implementierungen**. Sämtliche Datenzugriffe und Authentifizierungsoperationen laufen über TypeScript-Interfaces. Die Stubs implementieren diese Interfaces mit lokalen In-Memory-Daten – keine externen Abhängigkeiten, keine Datenbank, keine `.env`-Datei erforderlich.
-
-```
-IAuthService        → AuthServiceStub        (In-Memory-Testnutzer)
-IProductRepository  → ProductRepositoryStub  (lokale Seed-Daten)
-IOrderRepository    → OrderRepositoryStub    (In-Memory-Bestellungen)
-```
-
-**Routenschutz:** In Next.js 16 wurde `middleware.ts` durch `proxy.ts` ersetzt. Die Datei `src/proxy.ts` enthält den Routenschutz via Cookie-Prüfung und leitet nicht authentifizierte Zugriffe auf `/orders` und `/admin` zur Login-Seite um.
+Das Projekt setzt auf das  **Stub-Implementierungen**. Sämtliche Datenzugriffe und Authentifizierungsoperationen laufen über TypeScript-Interfaces. Die Stubs implementieren diese Interfaces mit lokalen In-Memory-Daten.
 
 ## Tech-Stack
 
@@ -25,13 +17,13 @@ IOrderRepository    → OrderRepositoryStub    (In-Memory-Bestellungen)
 | Styling           | Tailwind CSS                                           |
 | Unit-Tests        | Jest + ts-jest + @testing-library/react                |
 | E2E-Tests         | Playwright                                             |
-| CI/CD             | GitHub Actions (4 Stages, keine Secrets erforderlich)  |
+| CI/CD             | GitHub Actions (4 Stages)  |
 
 ## Setup
 
 ```bash
-npm install
-npm run dev     # http://localhost:3000
+pnpm install
+pnpm run dev     # http://localhost:3000
 ```
 
 **Testkonten:**
@@ -49,36 +41,6 @@ npm run dev     # http://localhost:3000
 | `npm run test:ci`       | Tests mit Coverage-Report (für CI)            |
 | `npm run test:e2e`      | Playwright End-to-End-Tests ausführen         |
 | `npm run test:e2e:ui`   | Playwright im UI-Modus starten                |
-
-## Projektstruktur
-
-```
-src/
-├── app/                        # Next.js App Router – Seiten
-│   ├── (auth)/login/           # Anmeldeseite
-│   ├── (auth)/register/        # Registrierungsseite
-│   ├── products/               # Produktliste & Detailseite
-│   ├── orders/                 # Meine Bestellungen (geschützt)
-│   └── admin/                  # Adminbereich (geschützt)
-├── components/
-│   ├── auth/                   # AuthProvider, LoginForm, RegisterForm
-│   ├── products/               # ProductCard, ProductList, ProductSearch
-│   ├── orders/                 # CartProvider, CartDrawer, OrderSummary, OrderStatusBadge
-│   └── ui/                     # Button, Input
-├── lib/
-│   ├── data/                   # Seed-Produkte & Testnutzer
-│   ├── services/               # Interfaces + Stub-Implementierungen
-│   ├── utils/                  # formatCurrency, formatDate, calculateOrderTotal
-│   └── validators/             # Zod-Schemas (auth, product, order)
-├── proxy.ts                    # Routenschutz (Next.js 16 Proxy, ersetzt middleware.ts)
-└── types/                      # Gemeinsame TypeScript-Interfaces
-tests/
-├── unit/                       # Jest-Unit-Tests (Validators, Utils, Komponenten)
-├── integration/                # React Testing Library – Integrationstests
-└── e2e/                        # Playwright End-to-End-Tests
-.github/workflows/
-└── ci.yml                      # 4-stufige CI-Pipeline (Lint → Test → Build → E2E)
-```
 
 ## CI/CD-Pipeline
 
